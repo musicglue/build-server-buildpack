@@ -4,6 +4,14 @@ set -e
 set -o pipefail
 shopt -s dotglob
 
+function indent() {
+  c='s/^/       /'
+  case $(uname) in
+    Darwin) sed -l "$c";;
+    *)      sed -u "$c";;
+  esac
+}
+
 echo "       $1/make \"$1\" \"$2\" \"$3\""
 
-$1/make "$1" "$2" "$3"
+$1/make "$1" "$2" "$3" | indent
